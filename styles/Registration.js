@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    maxWidth: "100%",
-    height: "100%",
+    flex: 1,
   },
   title: {
     fontWeight: 500,
@@ -28,14 +27,15 @@ export const styles = StyleSheet.create({
   },
   formWrapper: {
     width: "100%",
-    height: "70%",
+    height: "63%",
     position: "absolute",
     bottom: 0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    borderRadius: "25px 25px 0px 0px",
+    borderRadius: "25px",
+    paddingBottom: 400,
   },
   userImg: {
     backgroundColor: "#F6F6F6",
