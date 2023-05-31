@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     borderRadius: 15,
     marginTop: -60,
-    marginLeft:10,
+    marginLeft: 10,
   },
   input: {
     width: 342,
@@ -91,5 +91,25 @@ export const styles = StyleSheet.create({
     lineHeight: 19,
     position: "absolute",
     color: "#1B4371",
+  },
+  userInfo: {
+    marginTop: 32,
+    marginLeft: 16,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  userName: {
+    fontWeight: 700,
+    fontSize: 13,
+
+    color: "#212121",
+  },
+  userEmail: {
+    fontWeight: 400,
+    fontSize: 11,
+
+    color: "rgba(33, 33, 33, 0.8)",
   },
 });

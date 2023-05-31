@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import { styles } from "../styles/Registration";
-
+import { useNavigation } from '@react-navigation/native';
 
 const RegistrationScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -27,6 +27,9 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [loginName, setLoginName] = useState("");
   const [isPasswordShown, setShowPassword] = useState(false);
+
+  const navigation = useNavigation();
+
   if (!fontsLoaded) {
     return null;
   }
@@ -95,7 +98,7 @@ const RegistrationScreen = () => {
             <TouchableOpacity onPress={SingUp} style={styles.button}>
               <Text style={styles.buttonText}>Зареєструватися</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.loginBtn}>
               <Text style={styles.loginBtnText}>Вже є акаунт? Увійти</Text>
             </TouchableOpacity>
           </View>

@@ -13,20 +13,27 @@ import {
   Alert,
 } from "react-native";
 import { styles } from "../styles/Registration";
+import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const LoginScreen = ({ route }) => {
+  const { setUserInfo } = route.params || {};
   const [isEmailFocused, setEmailFocused] = useState(false);
   const [isPasswordFocused, setPasswordFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isPasswordShown, setShowPassword] = useState(false);
+  const navigation = useNavigation();
 
   const LogIn = () => {
-    Alert.alert(
-      "Welcome",
-      `Your mail: ${email} is registred, your password is ${password}`,
-      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-    );
+    if (!password || !email) {
+      Alert.alert("Please, Enter password either email!", "", [{ text: "OK" }]);
+      return;
+    }
+    Alert.alert("Welcome", `Your mail: ${email} is registred`, [
+      { text: "OK" },
+    ]);
+    setUserInfo({ email, password });
+    navigation.navigate("Home");
   };
 
   return (
@@ -65,7 +72,10 @@ const LoginScreen = () => {
             <TouchableOpacity onPress={LogIn} style={styles.button}>
               <Text style={styles.buttonText}>Увійти</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Registration")}
+              style={styles.loginBtn}
+            >
               <Text style={styles.loginBtnText}>
                 Немає акаунту? Зареєструватися
               </Text>
