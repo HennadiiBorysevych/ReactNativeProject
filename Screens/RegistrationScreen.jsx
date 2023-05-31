@@ -14,9 +14,10 @@ import {
 import { useFonts } from "expo-font";
 import { styles } from "../styles/Registration";
 
+
 const RegistrationScreen = () => {
   const [fontsLoaded] = useFonts({
-    Roboto: require("../assets/fonts/Roboto-Regular.ttf"),
+    RobotoRegular: require("../assets/fonts/Roboto-Regular.ttf"),
   });
   const [isEmailFocused, setEmailFocused] = useState(false);
   const [isPasswordFocused, setPasswordFocused] = useState(false);
@@ -26,15 +27,16 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [loginName, setLoginName] = useState("");
   const [isPasswordShown, setShowPassword] = useState(false);
-
-  const SingUp = () => {
-    Alert.alert({ password, email, loginName });
-  };
-
   if (!fontsLoaded) {
     return null;
   }
-
+  const SingUp = () => {
+    Alert.alert(
+      `Welcome, ${loginName}`,
+      `Your mail: ${email} is registred, your password is ${password}`,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+    );
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -46,17 +48,21 @@ const RegistrationScreen = () => {
           source={require("../assets/bg.jpg")}
         >
           <View style={styles.formWrapper}>
-            <Image
-              style={styles.userImg}
-              source={require("../assets/photo.svg")}
-            />
-            <Image
-              style={styles.addPic}
-              source={require("../assets/add.jpg")}
-            />
+            <TouchableOpacity>
+              <Image
+                style={styles.userImg}
+                source={require("../assets/photo.svg")}
+              />
+              <Image
+                style={styles.addPic}
+                source={require("../assets/add.jpg")}
+              />
+            </TouchableOpacity>
+
             <Text style={styles.title}>Реєстрація</Text>
             <TextInput
               onChangeText={setLoginName}
+              value={loginName}
               onFocus={() => setLoginFocused(true)}
               onBlur={() => setLoginFocused(false)}
               style={[styles.input, isLoginFocused && styles.inputFocused]}
@@ -64,6 +70,7 @@ const RegistrationScreen = () => {
             />
             <TextInput
               onChangeText={setEmail}
+              value={email}
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
               style={[styles.input, isEmailFocused && styles.inputFocused]}
@@ -71,6 +78,8 @@ const RegistrationScreen = () => {
             />
             <TextInput
               onChangeText={setPassword}
+              value={password}
+              keyboardType="email-address"
               secureTextEntry={isPasswordShown ? false : true}
               onFocus={() => setPasswordFocused(true)}
               onBlur={() => setPasswordFocused(false)}

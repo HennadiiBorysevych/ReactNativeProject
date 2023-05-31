@@ -19,9 +19,14 @@ const LoginScreen = () => {
   const [isPasswordFocused, setPasswordFocused] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [isPasswordShown, setShowPassword] = useState(false);
 
   const LogIn = () => {
-    Alert.alert({ password, email });
+    Alert.alert(
+      "Welcome",
+      `Your mail: ${email} is registred, your password is ${password}`,
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+    );
   };
 
   return (
@@ -48,12 +53,14 @@ const LoginScreen = () => {
               style={[styles.input, isPasswordFocused && styles.inputFocused]}
               placeholder="Пароль"
               onChangeText={setPassword}
-              secureTextEntry
+              secureTextEntry={isPasswordShown ? false : true}
               onFocus={() => setPasswordFocused(true)}
               onBlur={() => setPasswordFocused(false)}
             />
-            <TouchableOpacity>
-              <Text style={styles.showPassword}>Показати</Text>
+            <TouchableOpacity onPress={() => setShowPassword(!isPasswordShown)}>
+              <Text style={styles.showPassword}>
+                {isPasswordShown ? "Сховати" : "Показати"}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={LogIn} style={styles.button}>
               <Text style={styles.buttonText}>Увійти</Text>
