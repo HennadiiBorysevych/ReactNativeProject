@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 32,
     marginBottom: 32,
-
     color: "#212121",
   },
   image: {
@@ -111,5 +110,9 @@ export const styles = StyleSheet.create({
     fontSize: 11,
 
     color: "rgba(33, 33, 33, 0.8)",
+  },
+  publicationWrapper: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });

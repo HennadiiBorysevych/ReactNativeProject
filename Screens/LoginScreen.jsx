@@ -16,7 +16,6 @@ import { styles } from "../styles/Registration";
 import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = ({ route }) => {
-  const { setUserInfo } = route.params || {};
   const [isEmailFocused, setEmailFocused] = useState(false);
   const [isPasswordFocused, setPasswordFocused] = useState(false);
   const [password, setPassword] = useState("");
@@ -32,7 +31,6 @@ const LoginScreen = ({ route }) => {
     Alert.alert("Welcome", `Your mail: ${email} is registred`, [
       { text: "OK" },
     ]);
-    setUserInfo({ email, password });
     navigation.navigate("Home");
   };
 

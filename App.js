@@ -11,8 +11,6 @@ import PostsScreen from "./Screens/PostsScreen";
 const MainStack = createStackNavigator();
 
 export default function App() {
-  const [userInfo, setUserInfo] = useState({});
-  console.log("🚀 ~ file: App.js:15 ~ App ~ userInfo:", userInfo)
 
   return (
     <NavigationContainer>
@@ -25,12 +23,10 @@ export default function App() {
           }}
         />
         <MainStack.Screen
-          initialParams={{ setUserInfo }}
           name="Login"
           component={LoginScreen}
           options={({ route }) => ({
             headerShown: false,
-            initialParams: { setUserInfo: route.params?.setUserInfo },
           })}
         />
         <MainStack.Screen
@@ -57,7 +53,6 @@ export default function App() {
               </TouchableOpacity>
             ),
             headerLeft: null,
-            userInfo: route.params?.userInfo,
           })}
         />
         <MainStack.Screen name="Posts" component={PostsScreen} />

@@ -1,11 +1,30 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import ProfileScreen from "./ProfileScreen";
+import CreatePostsScreen from "./CreatePostsScreen";
+import PostsScreen from "./CreatePostsScreen";
+
 import { styles } from "../styles/Registration";
 const Tabs = createBottomTabNavigator();
+
 const Home = ({ route }) => {
+  const renderCustomIcon = (focused, source) => {
+    return (
+      <Image
+        source={source}
+        style={{
+          width: 60,
+          height: 60,
+          tintColor: focused ? "tomato" : "gray",
+        }}
+      />
+    );
+  };
+
   return (
-    <View>
+    <View style={styles.publicationWrapper}>
       <View style={styles.userInfo}>
         <Image
           style={{ width: 60, height: 60 }}
@@ -15,29 +34,53 @@ const Home = ({ route }) => {
           <Text style={styles.userName}>Natali Romanova</Text>
           <Text>email@example.com</Text>
         </View>
-        <Tabs.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              if (route.name === "Profile") {
-                iconName = focused
-                  ? "ios-information-circle"
-                  : "ios-information-circle-outline";
-              } else if (route.name === "Settings") {
-                iconName = focused ? "ios-list-box" : "ios-list";
-              }
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: "tomato",
-            inactiveTintColor: "gray",
-          }}
-        >
-          <Tabs.Screen name="Settings" component={} />
-          <Tabs.Screen name="Profile" component={Profile} />
-        </Tabs.Navigator>
       </View>
+      <Tabs.Navigator initialRouteName="PostsScreen">
+        <Tabs.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            tabBarLabel: "",
+            tabBarIcon: ({ color }) => (
+              <Image
+                style={{ width: 40, height: 40, marginLeft: 90, marginTop: 22 }}
+                source={require("../assets/grid.png")}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Створити публікацію"
+          component={CreatePostsScreen}
+          options={{
+            tabBarLabel: "",
+            tabBarIcon: ({ color }) => (
+              <Image
+                style={{ width: 70, height: 40, marginTop: 20 }}
+                source={require("../assets/rectangle.png")}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="PostsScreen"
+          component={PostsScreen}
+          options={{
+            tabBarLabel: "",
+            tabBarIcon: ({ color }) => (
+              <Image
+                style={{
+                  width: 40,
+                  height: 40,
+                  marginRight: 90,
+                  marginTop: 18,
+                }}
+                source={require("../assets/user.png")}
+              />
+            ),
+          }}
+        />
+      </Tabs.Navigator>
     </View>
   );
 };
