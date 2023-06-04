@@ -54,7 +54,6 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FF6C00",
     borderRadius: 50,
     width: 342,
     height: 50,
@@ -115,4 +114,74 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
   },
+  photoUpload: {
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight: 19,
+    marginTop: 8,
+    color: "#bdbdbd",
+    marginRight:200,
+  },
+  photoDes: {
+    width: 343,
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E8E8",
+    marginTop: 32,
+  },
+  location: {
+    marginTop: 16,
+    width: 343,
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E8E8",
+    paddingLeft: 20,
+  },
+  publishBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F6F6F6",
+    borderRadius: 50,
+    width: 342,
+    height: 50,
+    marginTop: 32,
+  },
+  container: { flex: 1 },
+  camera: { flex: 1 },
+  photoView: {
+    flex: 1,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+     borderRadius: 8 
+  },
+
+  flipContainer: {
+    flex: 0.1,
+    alignSelf: "flex-end",
+  },
+
+  button: { alignSelf: "center" },
+
+  takePhotoOut: {
+    borderWidth: 2,
+    borderColor: "white",
+    height: 50,
+    width: 50,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+
+  takePhotoInner: {
+    borderWidth: 2,
+    borderColor: "white",
+    height: 40,
+    width: 40,
+    backgroundColor: "white",
+    borderRadius: 50,
+    alignItems: "center",
+  },
+
 });

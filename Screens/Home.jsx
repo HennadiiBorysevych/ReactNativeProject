@@ -2,15 +2,12 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfileScreen from "./ProfileScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
-import PostsScreen from "./PostsScreen"; // Assuming you have a separate PostsScreen component
-// import { useNavigation } from "@react-navigation/native";
+import PostsScreen from "./PostsScreen";
 
 import { styles } from "../styles/Registration";
 const Tabs = createBottomTabNavigator();
 
 const Home = ({ navigation }) => {
-  // const navigation = useNavigation();
-
   return (
     <View style={styles.publicationWrapper}>
       <Tabs.Navigator initialRouteName="Публікації">
