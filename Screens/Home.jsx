@@ -1,44 +1,22 @@
-import React from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import ProfileScreen from "./ProfileScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
-import PostsScreen from "./CreatePostsScreen";
+import PostsScreen from "./PostsScreen"; // Assuming you have a separate PostsScreen component
+// import { useNavigation } from "@react-navigation/native";
 
 import { styles } from "../styles/Registration";
 const Tabs = createBottomTabNavigator();
 
-const Home = ({ route }) => {
-  const renderCustomIcon = (focused, source) => {
-    return (
-      <Image
-        source={source}
-        style={{
-          width: 60,
-          height: 60,
-          tintColor: focused ? "tomato" : "gray",
-        }}
-      />
-    );
-  };
+const Home = ({ navigation }) => {
+  // const navigation = useNavigation();
 
   return (
     <View style={styles.publicationWrapper}>
-      <View style={styles.userInfo}>
-        <Image
-          style={{ width: 60, height: 60 }}
-          source={require("../assets/user.jpg")}
-        />
-        <View>
-          <Text style={styles.userName}>Natali Romanova</Text>
-          <Text>email@example.com</Text>
-        </View>
-      </View>
-      <Tabs.Navigator initialRouteName="PostsScreen">
+      <Tabs.Navigator initialRouteName="Публікації">
         <Tabs.Screen
-          name="ProfileScreen"
-          component={ProfileScreen}
+          name="Публікації"
+          component={PostsScreen}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color }) => (
@@ -46,6 +24,14 @@ const Home = ({ route }) => {
                 style={{ width: 40, height: 40, marginLeft: 90, marginTop: 22 }}
                 source={require("../assets/grid.png")}
               />
+            ),
+            headerRight: () => (
+              <TouchableOpacity  onPress={() => navigation.navigate("Login")}>
+                <Image
+                  style={{ width: 24, height: 24, margin: 10 }}
+                  source={require("../assets/log-out.png")}
+                />
+              </TouchableOpacity>
             ),
           }}
         />
@@ -60,11 +46,19 @@ const Home = ({ route }) => {
                 source={require("../assets/rectangle.png")}
               />
             ),
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Публікації")}>
+                <Image
+                  style={{ width: 24, height: 24, margin: 10 }}
+                  source={require("../assets/arrow.png")}
+                />
+              </TouchableOpacity>
+            ),
           }}
         />
         <Tabs.Screen
-          name="PostsScreen"
-          component={PostsScreen}
+          name="Профіль"
+          component={ProfileScreen}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color }) => (
