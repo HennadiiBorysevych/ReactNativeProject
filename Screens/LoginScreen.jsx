@@ -67,7 +67,20 @@ const LoginScreen = ({ route }) => {
                 {isPasswordShown ? "Сховати" : "Показати"}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={LogIn} style={styles.button}>
+            <TouchableOpacity
+              onPress={LogIn}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 50,
+                width: 342,
+                backgroundColor: "#FF6C00",
+                height: 50,
+                marginBottom: 16,
+                marginTop: 15,
+              }}
+            >
               <Text style={styles.buttonText}>Увійти</Text>
             </TouchableOpacity>
             <TouchableOpacity

@@ -26,6 +26,7 @@ const CreatePostsScreen = ({ navigation }) => {
   const [photoUri, setPhotoUri] = useState(null);
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState(null);
+  const [picName, setPicName] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -74,7 +75,6 @@ const CreatePostsScreen = ({ navigation }) => {
     }
   };
 
-  // Helper function to extract the specific address component from the address components array
   const extractAddressComponent = (addressComponents, type) => {
     for (let component of addressComponents) {
       const types = component.types;
@@ -101,12 +101,12 @@ const CreatePostsScreen = ({ navigation }) => {
   }
 
   return (
-    <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
-      style={container.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={container.overlay}
       >
-        <View >
+        <View style={container.container}>
           <Camera
             style={{ width: 343, height: 240, marginTop: 32 }}
             type={type}
@@ -168,6 +168,8 @@ const CreatePostsScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TextInput
+            onChangeText={(text) => setPicName(text)}
+            value={picName}
             style={styles.photoDes}
             keyboardType="default"
             placeholder="Назва..."
@@ -200,7 +202,7 @@ const CreatePostsScreen = ({ navigation }) => {
               height: 24,
               position: "absolute",
               top: 409,
-              left: 10,
+              left: -5,
             }}
             source={require("../assets/map.png")}
           />
@@ -233,6 +235,12 @@ const container = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     alignItems: "center",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
