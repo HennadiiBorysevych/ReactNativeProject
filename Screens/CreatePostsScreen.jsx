@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -11,22 +12,32 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
-import { styles } from "../styles/Registration";
-
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { styles } from "../styles/Registration";
+
+import {
+  setCameraRef,
+  setHasPermission,
+  setPhotoUri,
+  setLocation,
+  setAddress,
+  setPicName,
+} from "../redux/rootReducer";
 
 const CreatePostsScreen = ({ navigation }) => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [photoUri, setPhotoUri] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [address, setAddress] = useState(null);
-  const [picName, setPicName] = useState("");
+  // const dispatch = useDispatch();
+  // const {
+  //   hasPermission,
+  //   cameraRef,
+  //   photoUri,
+  //   location,
+  //   address,
+  //   picName,
+  // } = useSelector((state) => state.posts);
+  // console.log("🚀 ~ file: CreatePostsScreen.jsx:39 ~ CreatePostsScreen ~ picName:", picName)
 
   useEffect(() => {
     (async () => {
@@ -40,7 +51,7 @@ const CreatePostsScreen = ({ navigation }) => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
-      setLocation(coords);
+      dispatch(setLocation(coords));
       getAddressFromCoordinates(coords.latitude, coords.longitude);
     })();
   }, []);
@@ -50,7 +61,7 @@ const CreatePostsScreen = ({ navigation }) => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(status === "granted");
+      // dispatch(setHasPermission(status === "granted"));
     })();
   }, []);
 
@@ -66,7 +77,7 @@ const CreatePostsScreen = ({ navigation }) => {
         const addressComponents = data.results[0].address_components;
         const city = extractAddressComponent(addressComponents, "locality");
         const country = extractAddressComponent(addressComponents, "country");
-        setAddress(`${city}, ${country}`);
+        dispatch(setAddress(`${city}, ${country}`));
       } else {
         throw new Error(data.error_message || "Invalid request");
       }
@@ -89,16 +100,17 @@ const CreatePostsScreen = ({ navigation }) => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
-      setPhotoUri(uri);
+      dispatch(setPhotoUri(uri));
       getAddressFromCoordinates(location.latitude, location.longitude);
     }
   };
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+
+  // if (hasPermission === null) {
+  //   return <View />;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -109,18 +121,14 @@ const CreatePostsScreen = ({ navigation }) => {
         <View style={container.container}>
           <Camera
             style={{ width: 343, height: 240, marginTop: 32 }}
-            type={type}
-            ref={setCameraRef}
+            type={Camera.Constants.Type.back}
+            ref={(ref) => dispatch(setCameraRef(ref))}
           >
             <View style={styles.photoView}>
               <TouchableOpacity
                 style={styles.flipContainer}
                 onPress={() => {
-                  setType(
-                    type === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back
-                  );
+                  // Flip camera logic
                 }}
               >
                 <Image
@@ -161,14 +169,14 @@ const CreatePostsScreen = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </Camera>
-          <TouchableOpacity onPress={() => setPhotoUri(null)}>
+          <TouchableOpacity onPress={() => dispatch(setPhotoUri(null))}>
             <Text style={styles.photoUpload}>
               {photoUri ? "Редагувати фото" : "Завантажте фото"}
             </Text>
           </TouchableOpacity>
 
           <TextInput
-            onChangeText={(text) => setPicName(text)}
+            onChangeText={(text) => dispatch(setPicName(text))}
             value={picName}
             style={styles.photoDes}
             keyboardType="default"
@@ -209,7 +217,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
           <TouchableOpacity
             onPress={() => navigation.navigate("Публікації")}
-            disabled={photoUri ? false : true}
+            disabled={!photoUri}
             style={{
               ...styles.publishBtn,
               backgroundColor: photoUri ? "#FF6C00" : "#F6F6F6",
